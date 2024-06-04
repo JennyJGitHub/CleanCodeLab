@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanCodeLab", "CleanCodeLab.csproj", "{0E84CB6B-28D0-439F-9338-EA45B85EBE65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E84CB6B-28D0-439F-9338-EA45B85EBE65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E84CB6B-28D0-439F-9338-EA45B85EBE65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E84CB6B-28D0-439F-9338-EA45B85EBE65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E84CB6B-28D0-439F-9338-EA45B85EBE65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C66E7850-C49C-4465-A614-B90666F88F5F}
+	EndGlobalSection
+EndGlobal
