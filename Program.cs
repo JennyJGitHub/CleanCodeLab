@@ -24,22 +24,22 @@ namespace MooGame
                 Console.WriteLine("For practice, number is: " + goal + "\n");
                 string guess = Console.ReadLine();
 
-                int nGuess = 1;
+                int numberOfGuesses = 1;
                 string bbcc = checkBC(goal, guess);
                 Console.WriteLine(bbcc + "\n");
                 while (bbcc != "BBBB,")
                 {
-                    nGuess++;
+                    numberOfGuesses++;
                     guess = Console.ReadLine();
                     Console.WriteLine(guess + "\n");
                     bbcc = checkBC(goal, guess);
                     Console.WriteLine(bbcc + "\n");
                 }
                 StreamWriter output = new StreamWriter("result.txt", append: true);
-                output.WriteLine(name + "#&#" + nGuess);
+                output.WriteLine(name + "#&#" + numberOfGuesses);
                 output.Close();
                 showTopList();
-                Console.WriteLine("Correct, it took " + nGuess + " guesses\nContinue?");
+                Console.WriteLine("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
                 string answer = Console.ReadLine();
                 if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
                 {
@@ -67,7 +67,7 @@ namespace MooGame
 
         static string checkBC(string goal, string guess)
         {
-            int cows = 0, bulls = 0;
+            int bulls = 0, cows = 0;
             guess += "    ";     // if player entered less than 4 chars
             for (int i = 0; i < 4; i++)
             {
@@ -117,7 +117,7 @@ namespace MooGame
             Console.WriteLine("Player   games average");
             foreach (PlayerData p in results)
             {
-                Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.NGames, p.Average()));
+                Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
             }
             input.Close();
         }
@@ -126,26 +126,26 @@ namespace MooGame
     class PlayerData
     {
         public string Name { get; private set; }
-        public int NGames { get; private set; }
-        int totalGuess;
+        public int numberOfGames { get; private set; }
+        int totalGuesses;
 
 
         public PlayerData(string name, int guesses)
         {
             this.Name = name;
-            NGames = 1;
-            totalGuess = guesses;
+            numberOfGames = 1;
+            totalGuesses = guesses;
         }
 
         public void Update(int guesses)
         {
-            totalGuess += guesses;
-            NGames++;
+            totalGuesses += guesses;
+            numberOfGames++;
         }
 
         public double Average()
         {
-            return (double)totalGuess / NGames;
+            return (double)totalGuesses / numberOfGames;
         }
 
 
