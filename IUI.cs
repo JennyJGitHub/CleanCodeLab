@@ -1,4 +1,4 @@
-﻿namespace GameUI;
+﻿namespace GamesUI;
 
 interface IUI
 {

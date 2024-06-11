@@ -1,4 +1,4 @@
-﻿namespace GameUI;
+﻿namespace GamesUI;
 
 class ConsoleUI : IUI
 {

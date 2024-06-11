@@ -1,16 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using GameUI;
+using GamesUI;
 
 /* 
   TODOS: 
   - Metoder ska börja med stor bokstav
   - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
-  - 
+  - Bryt ut till mindre metoder som bara gör en sak
+  - Gör en controller
+  - Gör en klass som heter MooGame som har logiken för det spelet
  */
 
-namespace Games; // Hette MooGame innan
+namespace Games; // Hette MooGame innan. Finns det ett bättre namn?
 
 
 class MainClass  // Får den heta Program?
@@ -48,7 +50,12 @@ class MainClass  // Får den heta Program?
             StreamWriter output = new StreamWriter("result.txt", append: true);
             output.WriteLine(name + "#&#" + numberOfGuesses);
             output.Close();
-            showTopList();
+            List<PlayerData> topList = GetTopList();
+            ui.Write("Player   games average");
+            foreach (PlayerData p in topList)
+            {
+                ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
+            }
             ui.Write("Correct, it took " + numberOfGuesses + " guesses\nContinue?");
             string answer = ui.Read();
             if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
@@ -100,7 +107,7 @@ class MainClass  // Får den heta Program?
     }
 
 
-    static void showTopList()
+    static List<PlayerData> GetTopList() // Var void innan
     {
         StreamReader input = new StreamReader("result.txt");
         List<PlayerData> results = new List<PlayerData>();
@@ -124,49 +131,13 @@ class MainClass  // Får den heta Program?
 
         }
         results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-        Console.WriteLine("Player   games average");
-        foreach (PlayerData p in results)
-        {
-            Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
-        }
+        //Console.WriteLine("Player   games average");
+        //foreach (PlayerData p in results)
+        //{
+        //    Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
+        //}
         input.Close();
-    }
-}
 
-class PlayerData
-{
-    public string Name { get; private set; }
-    public int numberOfGames { get; private set; }
-    int totalGuesses;
-
-
-    public PlayerData(string name, int guesses)
-    {
-        this.Name = name;
-        numberOfGames = 1;
-        totalGuesses = guesses;
-    }
-
-    public void Update(int guesses)
-    {
-        totalGuesses += guesses;
-        numberOfGames++;
-    }
-
-    public double Average()
-    {
-        return (double)totalGuesses / numberOfGames;
-    }
-
-    // Hittar inte när dessa används
-    public override bool Equals(Object p)
-    {
-        return Name.Equals(((PlayerData)p).Name);
-    }
-
-
-    public override int GetHashCode()
-    {
-        return Name.GetHashCode();
+        return results; // lade till denna för att jag inte vill ha Console.WriteLine, utan vill använda mig av UIn
     }
 }
