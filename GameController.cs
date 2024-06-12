@@ -1,17 +1,19 @@
 ﻿using GamesUI;
+using System.Diagnostics;
 
 /* 
   TODOS: 
   - Metoder ska börja med stor bokstav
-  - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
   - Bryt ut till mindre metoder som bara gör en sak
-  - Gör en controller
   - Gör en klass som heter MooGame som har logiken för det spelet
-  - Se om du kan göra en interface som heter IGame för de 2 olika spelen som ska göras
   - Ska det heta IO istället för UI?
+  - Behöver namnen på metoderna i IUI vara mer tydliga?
+  - Behöver metoderna vara static? Fungerar som privata metoder när jag testade.
+  - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
+  - Se om du kan göra en interface som heter IGame för de 2 olika spelen som ska göras (VG)
  */
 
-namespace Games; // Hette MooGame innan. Finns det ett bättre namn?
+namespace Games;
 
 class GameController
 {
@@ -24,8 +26,6 @@ class GameController
 
     public void RunGame()
     {
-        IUI ui = new ConsoleUI();
-
         bool playOn = true;
         ui.Write("Enter your user name:\n");
         string name = ui.Read();
@@ -35,7 +35,7 @@ class GameController
             string goal = makeGoal();
 
 
-            ui.Write("New game:\n");
+            ui.Write("New game:\n"); // Skulle vilja ha med användarens namn här t.ex $"New game for {name}\n"
             //comment out or remove next line to play real games!
             ui.Write("For practice, number is: " + goal + "\n");
             string guess = ui.Read();
@@ -54,19 +54,24 @@ class GameController
             StreamWriter output = new StreamWriter("result.txt", append: true);
             output.WriteLine(name + "#&#" + numberOfGuesses);
             output.Close();
-            List<PlayerData> topList = GetTopList();
-            ui.Write("Player   games average");
-            foreach (PlayerData p in topList)
-            {
-                ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
-            }
-            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?");
-            string answer = ui.Read().ToLower();
+            ShowTopList(GetTopList()); // Är det fult att göra såhär?
+            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
+            string answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver
             if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
             {
                 playOn = false;
             }
             // Vill lägga till att konsolen töms om man vill fortsätta spela, så det ser snyggare ut.
+            ui.Clear();
+        }
+    }
+
+    void ShowTopList(List<PlayerData> topList)
+    {
+        ui.Write("Player   games average");
+        foreach (PlayerData player in topList)
+        {
+            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
         }
     }
 
@@ -137,13 +142,8 @@ class GameController
 
         }
         results.Sort((p1, p2) => p1.Average().CompareTo(p2.Average()));
-        //Console.WriteLine("Player   games average");
-        //foreach (PlayerData p in results)
-        //{
-        //    Console.WriteLine(string.Format("{0,-9}{1,5:D}{2,9:F2}", p.Name, p.numberOfGames, p.Average()));
-        //}
         input.Close();
 
-        return results; // lade till denna för att jag inte vill ha Console.WriteLine, utan vill använda mig av UIn
+        return results;
     }
 }
