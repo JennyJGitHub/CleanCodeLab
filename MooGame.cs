@@ -1,4 +1,6 @@
-﻿namespace Games;
+﻿using System.Xml.Linq;
+
+namespace Games;
 
 class MooGame : IGame
 {
@@ -35,6 +37,12 @@ class MooGame : IGame
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
     }
 
+    public void MakeTopList(string name, int numberOfGuesses) // Är det clean code att använda samma namn på variablerna och parametrarna? Borde jag ändra?
+    {
+        StreamWriter output = new StreamWriter("result.txt", append: true);
+        output.WriteLine(name + "#&#" + numberOfGuesses);
+        output.Close();
+    }
 
     public List<PlayerData> GetTopList()
     {

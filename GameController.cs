@@ -4,7 +4,6 @@ using System.Xml.Linq;
 
 /* 
   TODOS: 
-  - Kanske ändra namnet på CheckWinCondition
   - Bryt ut till mindre metoder som bara gör en sak
   - Gör en klass som heter MooGame som har logiken för det spelet
   - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
@@ -36,7 +35,7 @@ class GameController
             ui.Clear();
             ui.Write(game.GetRules());
 
-            ui.Write("New game:\n"); // Skulle vilja ha med användarens namn här t.ex $"New game for {name}\n"
+            ui.Write("New game:\n");
             //comment out or remove next line to play real games!
             ui.Write("For practice, number is: " + goal + "\n");
             string guess = ui.Read();
@@ -52,10 +51,8 @@ class GameController
                 hint = game.CreateHint(goal, guess);
                 ui.Write(hint + "\n");
             }
-            StreamWriter output = new StreamWriter("result.txt", append: true);
-            output.WriteLine(name + "#&#" + numberOfGuesses);
-            output.Close();
-            ShowTopList(game.GetTopList()); // Är det fult att göra såhär?
+            game.MakeTopList(name, numberOfGuesses);
+            ShowTopList(game.GetTopList()); // Är detta fult?
             ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
             answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver            
         }
