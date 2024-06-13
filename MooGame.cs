@@ -4,7 +4,7 @@ class MooGame : IGame
 {
     public string GetRules()
     {
-        return "\nRules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
+        return "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
             "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
     }
 

@@ -1,5 +1,6 @@
 ﻿using GamesUI;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 /* 
   TODOS: 
@@ -25,6 +26,69 @@ class GameController
     }
 
     public void Run()
+    {
+        string answer;
+        string name = GetUserName();
+
+        do
+        {
+            string goal = game.MakeGoal();
+            ui.Clear();
+            ui.Write(game.GetRules());
+
+            ui.Write("New game:\n"); // Skulle vilja ha med användarens namn här t.ex $"New game for {name}\n"
+            //comment out or remove next line to play real games!
+            ui.Write("For practice, number is: " + goal + "\n");
+            string guess = ui.Read();
+
+            int numberOfGuesses = 1;
+            string hint = game.CreateHint(goal, guess);
+            ui.Write(hint + "\n");
+            while (hint != "BBBB,")
+            {
+                numberOfGuesses++;
+                guess = ui.Read();
+                ui.Write(guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
+                hint = game.CreateHint(goal, guess);
+                ui.Write(hint + "\n");
+            }
+            StreamWriter output = new StreamWriter("result.txt", append: true);
+            output.WriteLine(name + "#&#" + numberOfGuesses);
+            output.Close();
+            ShowTopList(game.GetTopList()); // Är det fult att göra såhär?
+            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
+            answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver            
+        }
+        while (answer == null || answer == "" || answer.Substring(0, 1) != "n");
+    }
+
+    string GetUserName()
+    {
+        ui.Write("Enter your user name:\n");
+        string input = ui.Read().Trim();
+
+        // Säkerhet så att användarnamnet inte kan vara tomt. Om man vill att det ska kunna vara blankt så kan man ta bort detta
+        if (input == "")
+            input = "default";
+
+        return input;
+    }
+
+    void ShowTopList(List<PlayerData> topList)
+    {
+        ui.Write("Player   games average");
+        foreach (PlayerData player in topList)
+        {
+            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
+        }
+    }
+}
+
+/* 
+
+Gammal Run metod med en while loop istället för en do while:
+
+public void Run()
     {
         bool playOn = true;
         ui.Write("Enter your user name:\n");
@@ -70,62 +134,5 @@ class GameController
             ui.Clear();
         }
     }
-
-    void ShowTopList(List<PlayerData> topList)
-    {
-        ui.Write("Player   games average");
-        foreach (PlayerData player in topList)
-        {
-            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
-        }
-    }
-}
-
-/* 
-
-Annat alternativ på RunGame med en do while istället för en while loop:
-
-public void RunGame()
-{
-    string answer;
-    ui.Write("Enter your user name:\n");
-    string name = ui.Read();
-
-    // För framtiden där det är mer än ett spel
-    //ui.Write($"Welcome {name}, which game would you like to play?\n\n1. Moo\n2. Other game\n\nEnter the number:");
-
-    do
-    {
-        string goal = game.MakeGoal();
-
-
-        ui.Write("New game:\n"); // Skulle vilja ha med användarens namn här t.ex $"New game for {name}\n"
-        //comment out or remove next line to play real games!
-        ui.Write("For practice, number is: " + goal + "\n");
-        string guess = ui.Read();
-
-        int numberOfGuesses = 1;
-        string bbcc = game.CheckWinCondition(goal, guess); // Behöver ändra bbcc till mer passande namn
-        ui.Write(bbcc + "\n");
-        while (bbcc != "BBBB,")
-        {
-            numberOfGuesses++;
-            guess = ui.Read();
-            ui.Write(guess + "\n");
-            bbcc = game.CheckWinCondition(goal, guess);
-            ui.Write(bbcc + "\n");
-        }
-        StreamWriter output = new StreamWriter("result.txt", append: true);
-        output.WriteLine(name + "#&#" + numberOfGuesses);
-        output.Close();
-        ShowTopList(game.GetTopList()); // Är det fult att göra såhär?
-        ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
-        answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver
-
-        // Vill lägga till att konsolen töms om man vill fortsätta spela, så det ser snyggare ut. Eller vill vi ha den längst upp?
-        ui.Clear();
-    }
-    while (answer == null || answer == "" || answer.Substring(0, 1) != "n");
-} 
 
  */
