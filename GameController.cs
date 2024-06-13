@@ -31,12 +31,14 @@ class GameController
         string name = ui.Read();
 
         // För framtiden där det är mer än ett spel
-        //ui.Write($"Welcome {name}, which game would you like to play?\n\n1. Moo\n2. Other game\n\nEnter the number:");
+        //ui.Write($"\nWelcome {name}, which game would you like to play?\n\n1. Moo\n2. Other game\n\nEnter the number:");
+
+        ui.Write(game.GetRules());
+
 
         while (playOn) // Ta bort playOn och gör en do while som fortsätter så länge användaren inte svarar n eller no (eller som det redan är med att första bokstaven är n, men ogillar den lite)
         {
             string goal = game.MakeGoal();
-
 
             ui.Write("New game:\n"); // Skulle vilja ha med användarens namn här t.ex $"New game for {name}\n"
             //comment out or remove next line to play real games!
@@ -50,7 +52,7 @@ class GameController
             {
                 numberOfGuesses++;
                 guess = ui.Read();
-                ui.Write(guess + "\n");
+                ui.Write(guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
                 hint = game.CreateHint(goal, guess);
                 ui.Write(hint + "\n");
             }
