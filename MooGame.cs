@@ -20,27 +20,12 @@ class MooGame : IGame
         return goal;
     }
 
-    public string GetHint(string goal, string guess)
+    public string CreateHint(string goal, string guess)
     {
-        int bulls = 0, cows = 0;
+        // Detta borde hanteras på något annat ställe
         guess += "    ";     // if player entered less than 4 chars
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                if (goal[i] == guess[j])
-                {
-                    if (i == j)
-                    {
-                        bulls++;
-                    }
-                    else
-                    {
-                        cows++;
-                    }
-                }
-            }
-        }
+
+        (int bulls, int cows) = FindBullsAndCows(goal, guess); // Är det ok att skicka vidare samma parametrar?
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
     }
 
@@ -74,10 +59,10 @@ class MooGame : IGame
         return results;
     }
 
-    string CheckBullsAndCows(string goal, string guess)
+    (int, int) FindBullsAndCows(string goal, string guess)
     {
+        // Kan detta göras på ett bättre sätt?
         int bulls = 0, cows = 0;
-        guess += "    ";     // if player entered less than 4 chars
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -95,6 +80,6 @@ class MooGame : IGame
                 }
             }
         }
-        return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
+        return (bulls, cows);
     }
 }

@@ -44,14 +44,14 @@ class GameController
             string guess = ui.Read();
 
             int numberOfGuesses = 1;
-            string hint = game.GetHint(goal, guess);
+            string hint = game.CreateHint(goal, guess);
             ui.Write(hint + "\n");
             while (hint != "BBBB,")
             {
                 numberOfGuesses++;
                 guess = ui.Read();
                 ui.Write(guess + "\n");
-                hint = game.GetHint(goal, guess);
+                hint = game.CreateHint(goal, guess);
                 ui.Write(hint + "\n");
             }
             StreamWriter output = new StreamWriter("result.txt", append: true);

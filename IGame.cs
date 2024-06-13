@@ -3,6 +3,6 @@
 interface IGame
 {
     string MakeGoal();
-    string GetHint(string goal, string guess);
+    string CreateHint(string goal, string guess);
     List<PlayerData> GetTopList();
 }
