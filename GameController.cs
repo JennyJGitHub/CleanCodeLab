@@ -7,6 +7,7 @@ using System.Xml.Linq;
   - Bryt ut till mindre metoder som bara gör en sak
   - Gör en klass som heter MooGame som har logiken för det spelet
   - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
+  - Vill fixa till ShowTopList så den ser finare ut
   - Se om du kan göra en interface som heter IGame för de 2 olika spelen som ska göras (VG)
   - Vill ändra namet på filen result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
   - Var ska menyn vara? I Program, GameController eller i en ny som heter GameMenu? (VG)
@@ -36,25 +37,13 @@ class GameController
             ui.Clear();
             ui.Write(game.GetRules());
             game.MakeGoal();
-
+            game.NumberOfGuesses = 0;
             ui.Write("New game:\n");
+
             //comment out or remove next line to play real games!
             ui.Write("For practice, number is: " + game.Goal + "\n");
 
-            GetGuess();
-
-            game.NumberOfGuesses = 1;
-            string hint = game.CreateHint();
-            ui.Write(hint + "\n");
-            while (game.Guess != game.Goal)
-            {
-                game.NumberOfGuesses++;
-                game.Guess = "";
-                GetGuess();
-                ui.Write(game.Guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
-                hint = game.CreateHint();
-                ui.Write(hint + "\n");
-            }
+            LoopUntilCorrectGuess();
             game.MakeTopList();
             ShowTopList(game.GetTopList()); // Är detta fult?
             ui.Write("\nCorrect, it took " + game.NumberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
@@ -81,6 +70,18 @@ class GameController
         }
     }
 
+    void LoopUntilCorrectGuess()
+    {
+        while (game.Guess != game.Goal)
+        {
+            game.Guess = "";
+            GetGuess();
+            game.NumberOfGuesses++;
+            ui.Write(game.Guess + "\n"); // Vill man se denna? Gissningen syns ju ändå
+            ui.Write(game.CreateHint() + "\n");
+        }
+    }
+
     void ShowTopList(List<PlayerData> topList)
     {
         ui.Write("Player   games average");
@@ -89,4 +90,17 @@ class GameController
             ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
         }
     }
+
+    /* Som jag kan leka med tills jag tycker det ser snyggt ut
+    
+    void ShowTopList(List<PlayerData> topList)
+    {
+        ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", "Player", "games", "average"));
+        foreach (PlayerData player in topList)
+        {
+            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
+        }
+    }
+
+    */
 }
