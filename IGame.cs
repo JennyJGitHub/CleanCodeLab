@@ -6,6 +6,8 @@ interface IGame
     public int NumberOfGuesses { get; set; }
     string GetRules();
     string MakeGoal();
+    string HandleGuess(string guess);
+    string GetNotProperGuessMessage();
     string CreateHint(string goal, string guess);
     void MakeTopList();
 

@@ -40,7 +40,9 @@ class GameController
             ui.Write("New game:\n");
             //comment out or remove next line to play real games!
             ui.Write("For practice, number is: " + goal + "\n");
-            string guess = ui.Read();
+
+            //string guess = ui.Read();
+            string guess = GetGuess();
 
             game.NumberOfGuesses = 1;
             string hint = game.CreateHint(goal, guess);
@@ -48,7 +50,10 @@ class GameController
             while (hint != "BBBB,")
             {
                 game.NumberOfGuesses++;
-                guess = ui.Read();
+
+                //guess = ui.Read();
+                guess = GetGuess();
+
                 ui.Write(guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
                 hint = game.CreateHint(goal, guess);
                 ui.Write(hint + "\n");
@@ -67,6 +72,18 @@ class GameController
         return ui.Read().Trim();
 
         // Vil vi att det finns något som stoppar användaren från att ha ett tomt namn?
+    }
+
+    string GetGuess()
+    {
+        string guess = "";
+        while (guess == "")
+        {
+            guess = game.HandleGuess(ui.Read());
+            if (guess == "")
+                ui.Write(game.GetNotProperGuessMessage());
+        }
+        return guess;
     }
 
     void ShowTopList(List<PlayerData> topList)
