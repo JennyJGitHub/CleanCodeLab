@@ -4,6 +4,9 @@ namespace Games;
 
 class MooGame : IGame
 {
+    public string UserName { get; set; } = "";
+    public int NumberOfGuesses { get; set; } = 0;
+
     public string GetRules()
     {
         return "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
@@ -37,10 +40,10 @@ class MooGame : IGame
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
     }
 
-    public void MakeTopList(string name, int numberOfGuesses) // Är det clean code att använda samma namn på variablerna och parametrarna? Borde jag ändra?
+    public void MakeTopList()
     {
         StreamWriter output = new StreamWriter("result.txt", append: true);
-        output.WriteLine(name + "#&#" + numberOfGuesses);
+        output.WriteLine(UserName + "#&#" + NumberOfGuesses);
         output.Close();
     }
 
