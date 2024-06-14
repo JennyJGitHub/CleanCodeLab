@@ -2,13 +2,15 @@
 
 interface IGame
 {
-    public string UserName { get; set; }
-    public int NumberOfGuesses { get; set; }
+    string UserName { get; set; }
+    string Goal { get; set; }
+    string Guess { get; set; }
+    int NumberOfGuesses { get; set; }
     string GetRules();
-    string MakeGoal();
-    string HandleGuess(string guess);
+    void MakeGoal();
+    void HandleGuess(string guess);
     string GetNotProperGuessMessage();
-    string CreateHint(string goal, string guess);
+    string CreateHint();
     void MakeTopList();
 
     List<PlayerData> GetTopList();

@@ -33,29 +33,26 @@ class GameController
 
         do
         {
-            string goal = game.MakeGoal();
             ui.Clear();
             ui.Write(game.GetRules());
+            game.MakeGoal();
 
             ui.Write("New game:\n");
             //comment out or remove next line to play real games!
-            ui.Write("For practice, number is: " + goal + "\n");
+            ui.Write("For practice, number is: " + game.Goal + "\n");
 
-            //string guess = ui.Read();
-            string guess = GetGuess();
+            GetGuess();
 
             game.NumberOfGuesses = 1;
-            string hint = game.CreateHint(goal, guess);
+            string hint = game.CreateHint();
             ui.Write(hint + "\n");
-            while (hint != "BBBB,")
+            while (game.Guess != game.Goal)
             {
                 game.NumberOfGuesses++;
-
-                //guess = ui.Read();
-                guess = GetGuess();
-
-                ui.Write(guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
-                hint = game.CreateHint(goal, guess);
+                game.Guess = "";
+                GetGuess();
+                ui.Write(game.Guess + "\n"); // Varför ska denna skrivas ut igen? Det gör den inte första gången man gissar
+                hint = game.CreateHint();
                 ui.Write(hint + "\n");
             }
             game.MakeTopList();
@@ -71,19 +68,17 @@ class GameController
         ui.Write("Enter your user name:\n");
         return ui.Read().Trim();
 
-        // Vil vi att det finns något som stoppar användaren från att ha ett tomt namn?
+        // Vill vi att det finns något som stoppar användaren från att ha ett tomt namn?
     }
 
-    string GetGuess()
+    void GetGuess()
     {
-        string guess = "";
-        while (guess == "")
+        while (game.Guess == "")
         {
-            guess = game.HandleGuess(ui.Read());
-            if (guess == "")
+            game.HandleGuess(ui.Read().Trim());
+            if (game.Guess == "")
                 ui.Write(game.GetNotProperGuessMessage());
         }
-        return guess;
     }
 
     void ShowTopList(List<PlayerData> topList)
