@@ -6,11 +6,6 @@ using System.Xml.Linq;
   TODOS: 
   - GÖR TESTER!!!!!!!!!!
   - Bryt ut till mindre metoder som bara gör en sak
-  - Gör en klass som heter MooGame som har logiken för det spelet
-  - Försök förstå Equals och GetHashCode metoderna
-  - Mastermind som andra spel? Hur ska det gå till? (VG)
-  - Vill ändra namet på filen result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
-  - Var ska menyn vara? I Program eller i en ny som heter GameMenu? (VG)
   - Vill fixa till ShowTopList så den ser finare ut (Extra om det finns tid)
  */
 
@@ -41,7 +36,6 @@ class GuessingGameController
             ui.Write(game.GetRules());
             game.MakeGoal();
             numberOfGuesses = 0;
-
             ui.Write("New game:\n");
 
             //comment out or remove next line to play real games!
@@ -50,8 +44,8 @@ class GuessingGameController
             LoopUntilCorrectGuess();
             topList.MakeTopList(userName, numberOfGuesses);
             ShowTopList(topList.GetTopList()); // Är detta fult gjort?
-            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
-            answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver            
+            ui.Write(GetCorrectGuessMessage() + "\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
+            answer = ui.Read().ToLower();           
         }
         while (answer == null || answer == "" || answer.Substring(0, 1) != "n"); // Kommer answer någonsin vara null?
     }
@@ -70,7 +64,9 @@ class GuessingGameController
         {
             game.HandleGuess(ui.Read().Trim());
             if (game.Guess == "")
+            {
                 ui.Write(game.GetNotProperGuessMessage());
+            }
         }
     }
 
@@ -92,6 +88,18 @@ class GuessingGameController
         foreach (Player player in topList)
         {
             ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.Average()));
+        }
+    }
+
+    string GetCorrectGuessMessage()
+    {
+        if (numberOfGuesses == 1)
+        {
+            return "\nAmazing, you got it right on your first try!";
+        }
+        else
+        {
+            return "\nCorrect, it took " + numberOfGuesses + " guesses";
         }
     }
 

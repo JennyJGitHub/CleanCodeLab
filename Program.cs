@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using GamesUI;
 using System.Diagnostics.Metrics;
 
+/* 
+  TODOS:
+  - Mastermind som andra spel? Hur ska det gå till? (VG)
+  - Var ska menyn vara? I Program eller i en ny som heter GameMenu? (VG)
+ */
+
 namespace Games; // Finns det ett bättre namn?
 
 class Program

@@ -1,4 +1,10 @@
-﻿namespace Games;
+﻿/* 
+  TODOS: 
+  - GÖR TESTER!!!!!!!!!!
+  - Bryt ut till mindre metoder som bara gör en sak
+ */
+
+namespace Games;
 
 public class TopList // Fundera mer på namnet
 {

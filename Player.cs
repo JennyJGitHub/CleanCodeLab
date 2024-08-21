@@ -1,4 +1,9 @@
-﻿namespace Games;
+﻿/* 
+  TODOS: 
+  - Försök förstå Equals och GetHashCode metoderna
+ */
+
+namespace Games;
 
 public class Player
 {
