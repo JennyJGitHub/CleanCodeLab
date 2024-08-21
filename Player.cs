@@ -1,6 +1,6 @@
 ﻿namespace Games;
 
-class Player
+public class Player
 {
     public string Name { get; private set; }
     public int NumberOfGames { get; private set; }

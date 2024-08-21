@@ -11,8 +11,9 @@ class Program
     public static void Main(string[] args)
     {
         IUI ui = new ConsoleUI();
-        // Kommer göra interface och klasser för de olika spelen sen som också ska in i controllern
-        // Eller så skapas de i controllern, inte bestämt mig än
+
+        // VG: Skapa meny så användaren kan välja vilket spel som skapas.
+
         IGuessingGame game = new MooGame();
         GuessingGameController controller = new(ui, game);
         controller.Run();
