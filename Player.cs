@@ -1,37 +1,38 @@
 ﻿namespace Games;
 
-class PlayerData
+class Player
 {
     public string Name { get; private set; }
-    public int numberOfGames { get; private set; }
+    public int NumberOfGames { get; private set; }
     int totalGuesses;
 
 
-    public PlayerData(string name, int guesses)
+    public Player(string name, int guesses)
     {
         this.Name = name;
-        numberOfGames = 1;
+        NumberOfGames = 1;
         totalGuesses = guesses;
     }
 
     public void Update(int guesses)
     {
         totalGuesses += guesses;
-        numberOfGames++;
+        NumberOfGames++;
     }
 
     public double Average()
     {
-        return (double)totalGuesses / numberOfGames;
+        return (double)totalGuesses / NumberOfGames;
     }
 
-    // Hittar inte när dessa används
+    // Används när result sorteras
     public override bool Equals(Object p)
     {
-        return Name.Equals(((PlayerData)p).Name);
+        return Name.Equals(((Player)p).Name);
     }
 
 
+    // Hittar inte när denna används
     public override int GetHashCode()
     {
         return Name.GetHashCode();

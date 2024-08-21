@@ -13,8 +13,8 @@ class Program
         IUI ui = new ConsoleUI();
         // Kommer göra interface och klasser för de olika spelen sen som också ska in i controllern
         // Eller så skapas de i controllern, inte bestämt mig än
-        IGame game = new MooGame();
-        GameController controller = new(ui, game);
+        IGuessingGame game = new MooGame();
+        GuessingGameController controller = new(ui, game);
         controller.Run();
     }
 }

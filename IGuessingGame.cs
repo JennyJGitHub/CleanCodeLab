@@ -1,6 +1,6 @@
 ﻿namespace Games;
 
-interface IGame
+interface IGuessingGame
 {
     string UserName { get; set; }
     string Goal { get; set; }
@@ -10,8 +10,8 @@ interface IGame
     void MakeGoal();
     void HandleGuess(string guess);
     string GetNotProperGuessMessage();
-    string CreateHint();
+    string GetHint();
     void MakeTopList();
 
-    List<PlayerData> GetTopList();
+    List<Player> GetTopList();
 }

@@ -4,9 +4,10 @@ using System.Xml.Linq;
 
 /* 
   TODOS: 
+  - GÖR TESTER!!!!!!!!!!
   - Bryt ut till mindre metoder som bara gör en sak
   - Gör en klass som heter MooGame som har logiken för det spelet
-  - Försök förstå Equals och GetHashCode metoderna - De används när top listan ska visas
+  - Försök förstå Equals och GetHashCode metoderna
   - Vill fixa till ShowTopList så den ser finare ut
   - Se om du kan göra en interface som heter IGame för de 2 olika spelen som ska göras (VG)
   - Vill ändra namet på filen result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
@@ -15,12 +16,12 @@ using System.Xml.Linq;
 
 namespace Games;
 
-class GameController
+class GuessingGameController
 {
     IUI ui;
-    IGame game;
+    IGuessingGame game;
 
-    public GameController(IUI ui, IGame game)
+    public GuessingGameController(IUI ui, IGuessingGame game)
     {
         this.ui = ui;
         this.game = game;
@@ -28,7 +29,7 @@ class GameController
 
     public void Run()
     {
-        string answer;
+        string answer; // ändra till bool playerWantsToQuit = false;
         game.UserName = GetUserName();
 
 
@@ -49,7 +50,7 @@ class GameController
             ui.Write("\nCorrect, it took " + game.NumberOfGuesses + " guesses\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
             answer = ui.Read().ToLower(); // Lade till ToLower så att man användaren blir förstådd om hen använder stora bokstäver            
         }
-        while (answer == null || answer == "" || answer.Substring(0, 1) != "n");
+        while (answer == null || answer == "" || answer.Substring(0, 1) != "n"); // Kommer answer någonsin vara null?
     }
 
     string GetUserName()
@@ -70,7 +71,7 @@ class GameController
         }
     }
 
-    void LoopUntilCorrectGuess()
+    void LoopUntilCorrectGuess() // Är namnet och innehållet OK?
     {
         while (game.Guess != game.Goal)
         {
@@ -78,16 +79,16 @@ class GameController
             GetGuess();
             game.NumberOfGuesses++;
             ui.Write(game.Guess + "\n"); // Vill man se denna? Gissningen syns ju ändå
-            ui.Write(game.CreateHint() + "\n");
+            ui.Write(game.GetHint() + "\n");
         }
     }
 
-    void ShowTopList(List<PlayerData> topList)
+    void ShowTopList(List<Player> topList)
     {
         ui.Write("Player   games average");
-        foreach (PlayerData player in topList)
+        foreach (Player player in topList)
         {
-            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
+            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.Average()));
         }
     }
 

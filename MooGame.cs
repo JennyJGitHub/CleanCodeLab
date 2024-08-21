@@ -4,9 +4,14 @@ namespace Games;
 
 // Todo:
 // Ta en titt på MakeGoal och GetTopList, se om du kan bryta ut det till mindre metoder eller om det kan förbättras på andra sätt.
+// Kolla om FindBullsAndCows kan förbättras
+// Kolla om HandleGuess kan förbättras
+
+// Kanske flytta MakeTopList och GetTopList till antingen sin egen klass eller controllern.
+// Ska vi flytta ut UserName och NumberOfGuesses till controllern?
 
 
-class MooGame : IGame
+class MooGame : IGuessingGame
 {
     public string UserName { get; set; } = "";
     public string Goal { get; set; } = "";
@@ -52,12 +57,12 @@ class MooGame : IGame
 
     }
 
-    public string GetNotProperGuessMessage()
+    public string GetNotProperGuessMessage() // Finns det ett bättre namn?
     {
         return "\nYour guess needs to be 4 numbers, please try again.\n";
     }
 
-    public string CreateHint()
+    public string GetHint()
     {
         (int bulls, int cows) = FindBullsAndCows();
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
@@ -70,17 +75,17 @@ class MooGame : IGame
         output.Close();
     }
 
-    public List<PlayerData> GetTopList()
+    public List<Player> GetTopList() // Gå igenom metoden, förstå hur den funkar och ändra variablerna till tydligare namn
     {
-        StreamReader input = new StreamReader("result.txt"); // Vill ändra namet till resultMooGame så att det finns en annan result för det andra spelet
-        List<PlayerData> results = new List<PlayerData>();
+        StreamReader input = new StreamReader("result.txt"); // Vill ändra namet till resultMooGame så att det finns en annan result för det andra spelet. Borde skicka in en variabel istället för en hårdkodad sträng. Då kan det bytas ut beroende påvilket spel man spelar.
+        List<Player> results = new List<Player>();
         string line;
-        while ((line = input.ReadLine()) != null)
+        while ((line = input.ReadLine()) != null) // Kan man bryta ut detta till en privat metod?
         {
             string[] nameAndScore = line.Split(new string[] { "#&#" }, StringSplitOptions.None);
             string name = nameAndScore[0];
             int guesses = Convert.ToInt32(nameAndScore[1]);
-            PlayerData pd = new PlayerData(name, guesses);
+            Player pd = new Player(name, guesses);
             int pos = results.IndexOf(pd);
             if (pos < 0)
             {
