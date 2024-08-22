@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 /* 
   TODOS: 
-  - GÖR TESTER!!!!!!!!!!
+  - Finns bara en publik metod, osäker på hur jag testar den. Behöver jag göra tester på de privata metoderna?
   - Bryt ut till mindre metoder som bara gör en sak
   - Vill fixa till ShowTopList så den ser finare ut (Extra om det finns tid)
  */
@@ -23,31 +23,36 @@ class GuessingGameController
         this.game = game;
     }
 
-    public void Run()
+    public void RunGame()
     {
-        string answer; // kanske ändra till bool playerWantsToQuit = false;
+        bool playerWantsToQuit = false;
 
         string userName = GetUserName();
         TopList topList = new(game.TopListFileName);
 
         do
         {
-            ui.Clear();
-            ui.Write(game.GetRules());
-            game.MakeGoal();
-            numberOfGuesses = 0;
-            ui.Write("New game:\n");
+            StartNewRound();
 
-            //comment out or remove next line to play real games!
+            // Comment out or remove next line to play real games!
             ui.Write("For practice, number is: " + game.Goal + "\n");
 
             LoopUntilCorrectGuess();
             topList.MakeTopList(userName, numberOfGuesses);
             ShowTopList(topList.GetTopList()); // Är detta fult gjort?
             ui.Write(GetCorrectGuessMessage() + "\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
-            answer = ui.Read().ToLower();           
+            playerWantsToQuit = CheckIfPlayerWantsToQuit();        
         }
-        while (answer == null || answer == "" || answer.Substring(0, 1) != "n"); // Kommer answer någonsin vara null?
+        while (playerWantsToQuit == false);
+    }
+
+    void StartNewRound()
+    {
+        ui.Clear();
+        ui.Write(game.GetRules());
+        game.MakeGoal();
+        numberOfGuesses = 0;
+        ui.Write("New game:\n");       
     }
 
     string GetUserName()
@@ -100,6 +105,20 @@ class GuessingGameController
         else
         {
             return "\nCorrect, it took " + numberOfGuesses + " guesses";
+        }
+    }
+
+    bool CheckIfPlayerWantsToQuit() // Bättre namn?
+    {
+        string answer = ui.Read().ToLower();
+
+        if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

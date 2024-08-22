@@ -22,6 +22,6 @@ class Program
 
         IGuessingGame game = new MooGame();
         GuessingGameController controller = new(ui, game);
-        controller.Run();
+        controller.RunGame();
     }
 }
