@@ -7,7 +7,7 @@
 // Vill ändra result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
 
 
-class MooGame : IGuessingGame
+public class MooGame : IGuessingGame
 {
     public string Goal { get; set; } = "";
     public string Guess { get; set; } = "";
