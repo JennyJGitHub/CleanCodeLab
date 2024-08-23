@@ -1,6 +1,5 @@
 ﻿/* 
-  TODOS: 
-  - GÖR TESTER!!!!!!!!!!
+  TODOS:
   - Bryt ut till mindre metoder som bara gör en sak
  */
 

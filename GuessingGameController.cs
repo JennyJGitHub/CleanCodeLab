@@ -3,8 +3,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 
 /* 
-  TODOS: 
-  - Finns bara en publik metod, osäker på hur jag testar den. Behöver jag göra tester på de privata metoderna?
+  TODOS:
   - Bryt ut till mindre metoder som bara gör en sak
   - Vill fixa till ShowTopList så den ser finare ut (Extra om det finns tid)
  */

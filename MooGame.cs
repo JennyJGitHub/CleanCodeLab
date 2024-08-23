@@ -1,7 +1,6 @@
 ﻿namespace Games;
 
 // Todo:
-// GÖR TESTER!!!!!!!!!!
 // Kolla om FindBullsAndCows kan förbättras
 // Kolla om HandleGuess kan förbättras
 // Vill ändra result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
