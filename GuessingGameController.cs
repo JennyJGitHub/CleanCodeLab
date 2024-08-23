@@ -28,7 +28,7 @@ class GuessingGameController
         bool playerWantsToQuit = false;
 
         string userName = GetUserName();
-        TopList topList = new(game.TopListFileName);
+        ITopListHandler topList = new TopListHandlerForTxtFiles(game.TopListFileName);
 
         do
         {

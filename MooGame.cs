@@ -37,7 +37,7 @@ public class MooGame : IGuessingGame
         Goal = goal;
     }
 
-    public void HandleGuess(string guess)
+    public void HandleGuess(string guess) // Skriver du + eller - före 3 siffror så släpps det igenom.
     {
         // Vill kolla om gissningen bara består av siffror, men vill inte använda guessInt. Finns det ett bättre sätt?
         bool guessIsInt = Int32.TryParse(guess, out int guessInt);

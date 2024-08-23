@@ -6,11 +6,11 @@
 
 namespace Games;
 
-public class TopList // Fundera mer på namnet
+public class TopListHandlerForTxtFiles : ITopListHandler // Fundera mer på namnet
 {
     string fileName = "";
 
-    public TopList(string fileName)
+    public TopListHandlerForTxtFiles(string fileName)
     {
         this.fileName = fileName;
     }
