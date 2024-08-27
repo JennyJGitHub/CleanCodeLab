@@ -1,8 +1,6 @@
 ﻿namespace Games;
 
 // Todo:
-// Kolla om MakeGoal kan förbättras
-// Kolla om FindBullsAndCows kan förbättras
 // Kolla om HandleGuess kan förbättras
 // Vill ändra result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
 
@@ -25,14 +23,14 @@ public class MooGame : IGuessingGame
         string goal = "";
         for (int i = 0; i < 4; i++)
         {
-            int random = randomGenerator.Next(10);
-            string randomDigit = "" + random;
-            while (goal.Contains(randomDigit))
+            int randomNumber = randomGenerator.Next(10);
+            string randomNumberAsString = randomNumber.ToString();
+            while (goal.Contains(randomNumberAsString))
             {
-                random = randomGenerator.Next(10);
-                randomDigit = "" + random;
+                randomNumber = randomGenerator.Next(10);
+                randomNumberAsString = randomNumber.ToString();
             }
-            goal = goal + randomDigit;
+            goal = goal + randomNumberAsString;
         }
         Goal = goal;
     }
@@ -59,14 +57,13 @@ public class MooGame : IGuessingGame
 
     public string GetHint()
     {
-        (int bulls, int cows) = FindBullsAndCows();
+        (int bulls, int cows) = GetBullsAndCows();
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
     }
 
 
-    (int, int) FindBullsAndCows()
+    (int, int) GetBullsAndCows()
     {
-        // Kan detta göras på ett bättre sätt?
         int bulls = 0, cows = 0;
         for (int i = 0; i < 4; i++)
         {

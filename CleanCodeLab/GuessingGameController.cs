@@ -1,6 +1,4 @@
 ﻿using GamesUI;
-using System.Diagnostics;
-using System.Xml.Linq;
 
 /* 
   TODOS:
@@ -27,7 +25,7 @@ class GuessingGameController
         bool playerWantsToQuit = false;
 
         string userName = GetUserName();
-        ITopListHandler topList = new TopListHandlerForTxtFiles(game.TopListFileName);
+        ITopListHandler topListHandler = new TopListHandlerForTxtFiles(game.TopListFileName);
 
         do
         {
@@ -37,9 +35,9 @@ class GuessingGameController
             ui.Write("For practice, number is: " + game.Goal + "\n");
 
             LoopUntilCorrectGuess();
-            topList.MakeTopList(userName, numberOfGuesses);
-            ShowTopList(topList.GetTopList()); // Är detta fult gjort?
-            ui.Write(GetCorrectGuessMessage() + "\nContinue?"); // Vill lägga till "Y/N?" för det är mer tydligt för användaren vad hen ska skriva
+            topListHandler.MakeTopList(userName, numberOfGuesses);
+            ShowTopList(topListHandler.GetTopList()); // Är detta fult gjort?
+            ui.Write(GetCorrectGuessMessage() + "\nContinue?");
             playerWantsToQuit = CheckIfPlayerWantsToQuit();        
         }
         while (playerWantsToQuit == false);
@@ -74,14 +72,14 @@ class GuessingGameController
         }
     }
 
-    void LoopUntilCorrectGuess() // Är namnet och innehållet OK?
+    void LoopUntilCorrectGuess()
     {
         while (game.Guess != game.Goal)
         {
             game.Guess = "";
             GetGuess();
             numberOfGuesses++;
-            ui.Write(game.Guess + "\n"); // Vill man se denna? Gissningen syns ju ändå
+            ui.Write(game.Guess + "\n");
             ui.Write(game.GetHint() + "\n");
         }
     }
@@ -107,7 +105,7 @@ class GuessingGameController
         }
     }
 
-    bool CheckIfPlayerWantsToQuit() // Bättre namn?
+    bool CheckIfPlayerWantsToQuit()
     {
         string answer = ui.Read().ToLower();
 
@@ -120,17 +118,4 @@ class GuessingGameController
             return false;
         }
     }
-
-    /* Som jag kan leka med tills jag tycker det ser snyggt ut (om det finns tid)
-    
-    void ShowTopList(List<PlayerData> topList)
-    {
-        ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", "Player", "games", "average"));
-        foreach (PlayerData player in topList)
-        {
-            ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.numberOfGames, player.Average()));
-        }
-    }
-
-    */
 }
