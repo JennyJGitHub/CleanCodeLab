@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Games;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Games.Tests
+﻿namespace Games.Tests
 {
     [TestClass()]
     public class MooGameTests
@@ -20,26 +12,28 @@ namespace Games.Tests
         }
 
         [TestMethod()]
-        public void GetRulesTest() // Är den nödvändig?
+        public void GetRules_GettingRules_ReturnRules() // Är den nödvändig?
         {
-            Assert.AreEqual("Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
-            "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n", mooGame.GetRules());
+            string expected = "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
+            "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
+            string actual = mooGame.GetRules();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        public void MakeGoalTest() // Är den ok? Får jag ha flera asserts?
+        public void MakeGoal_CallMethod_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska? Vet inte vad den ska heta.
         {
-            Assert.AreEqual("", mooGame.Goal);
+            int expectedLength = 4;
             mooGame.MakeGoal();
-            Assert.AreEqual(4, mooGame.Goal.Length);
+            Assert.AreEqual(expectedLength, mooGame.Goal.Length);
         }
 
         [TestMethod()]
-        public void HandleGuessRightInputTest()
+        public void HandleGuess_CorrectInput_GuessIsInput()
         {
-            string guess = "1234";
-            mooGame.HandleGuess(guess);
-            Assert.AreEqual(guess, mooGame.Guess);
+            string input = "1234";
+            mooGame.HandleGuess(input);
+            Assert.AreEqual(input, mooGame.Guess);
         }
 
         [TestMethod()]
@@ -49,44 +43,68 @@ namespace Games.Tests
         [DataRow("Shall not pass")]
         [DataRow("    ")]
         [DataRow("1.23")]
-        public void HandleGuessWrongInputTest(string input) // Borde detta vara flera tester? Är det svårt att förstå?
+        public void HandleGuess_WrongInput_GuessIsEmptyString(string input)
         {
             mooGame.HandleGuess(input);
             Assert.AreEqual("", mooGame.Guess);
         }
 
         [TestMethod()]
-        public void GetNotProperGuessMessageTest() // Är den nödvändig?
+        public void GetNotProperGuessMessage_GettingMessage_ReturnMessage() // Är den nödvändig?
         {
-            Assert.AreEqual("\nYour guess needs to be 4 numbers, please try again.\n", mooGame.GetNotProperGuessMessage());
+            string expected = "\nYour guess needs to be 4 numbers, please try again.\n";
+            string actual = mooGame.GetNotProperGuessMessage();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        public void GetHintTest() // Borde detta vara flera tester? Är det svårt att förstå?
+        public void GetHint_CorrectGuess_ReturnBBBB()
         {
             mooGame.Goal = "1234";
-
             mooGame.Guess = "1234";
-            Assert.AreEqual("BBBB,", mooGame.GetHint());
 
-            mooGame.Guess = "1235";
-            Assert.AreEqual("BBB,", mooGame.GetHint());
+            string expected = "BBBB,";
+            string actual = mooGame.GetHint();
 
-            mooGame.Guess = "1245";
-            Assert.AreEqual("BB,C", mooGame.GetHint());
-
-            mooGame.Guess = "4321";
-            Assert.AreEqual(",CCCC", mooGame.GetHint());
-
-            mooGame.Guess = "9876";
-            Assert.AreEqual(",", mooGame.GetHint());
+            Assert.AreEqual(expected, actual);
         }
-    }
-}
 
-namespace CleanCodeLabTests // Varför skapades detta?
-{
-    internal class MooGameTests
-    {
+        [TestMethod()]
+        public void GetHint_CorrectNumbersWrongPositionGuess_ReturnCCCC()
+        {
+            mooGame.Goal = "1234";
+            mooGame.Guess = "4321";
+
+            string expected = ",CCCC";
+            string actual = mooGame.GetHint();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetHint_HalfCorrectHalfWrongPositionGuess_ReturnBBCC()
+        {
+            mooGame.Goal = "1234";
+            mooGame.Guess = "1324";
+
+            string expected = "BB,CC";
+            string actual = mooGame.GetHint();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetHint_WrongGuess_ReturnComma()
+        {
+            mooGame.Goal = "1234";
+            mooGame.Guess = "9876";
+
+            string expected = ",";
+            string actual = mooGame.GetHint();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        // Ska jag göra fler tester på GetHint? BBB, och BB,C?
     }
 }
