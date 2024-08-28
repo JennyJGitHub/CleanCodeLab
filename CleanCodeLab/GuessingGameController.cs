@@ -2,7 +2,6 @@
 
 /* 
   TODOS:
-  - Bryt ut till mindre metoder som bara gör en sak
   - Vill fixa till ShowTopList så den ser finare ut (Extra om det finns tid)
  */
 
@@ -23,11 +22,10 @@ class GuessingGameController
     public void RunGame()
     {
         bool playerWantsToQuit = false;
-
         string userName = GetUserName();
         ITopListHandler topListHandler = new TopListHandlerForTxtFiles(game.TopListFileName);
 
-        do
+        while (playerWantsToQuit == false)
         {
             StartNewRound();
 
@@ -36,11 +34,11 @@ class GuessingGameController
 
             LoopUntilCorrectGuess();
             topListHandler.MakeTopList(userName, numberOfGuesses);
-            ShowTopList(topListHandler.GetTopList()); // Är detta fult gjort?
+            ShowTopList(topListHandler.GetTopList());
             ui.Write(GetCorrectGuessMessage() + "\nContinue?");
             playerWantsToQuit = CheckIfPlayerWantsToQuit();        
         }
-        while (playerWantsToQuit == false);
+        
     }
 
     void StartNewRound()
@@ -56,8 +54,6 @@ class GuessingGameController
     {
         ui.Write("Enter your user name:\n");
         return ui.Read().Trim();
-
-        // Vill vi att det finns något som stoppar användaren från att ha ett tomt namn?
     }
 
     void GetGuess()
@@ -67,7 +63,7 @@ class GuessingGameController
             game.HandleGuess(ui.Read().Trim());
             if (game.Guess == "")
             {
-                ui.Write(game.GetNotProperGuessMessage());
+                ui.Write(game.GetInvalidGuessMessage());
             }
         }
     }

@@ -8,6 +8,6 @@ interface IGuessingGame
     string GetRules();
     void MakeGoal();
     void HandleGuess(string guess);
-    string GetNotProperGuessMessage();
+    string GetInvalidGuessMessage();
     string GetHint();
 }

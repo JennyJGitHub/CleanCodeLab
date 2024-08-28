@@ -50,7 +50,7 @@ public class MooGame : IGuessingGame
 
     }
 
-    public string GetNotProperGuessMessage() // Finns det ett bättre namn?
+    public string GetInvalidGuessMessage()
     {
         return "\nYour guess needs to be 4 numbers, please try again.\n";
     }

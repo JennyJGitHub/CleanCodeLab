@@ -1,9 +1,4 @@
-﻿/* 
-  TODOS: 
-  - Försök förstå Equals och GetHashCode metoderna
- */
-
-namespace Games;
+﻿namespace Games;
 
 public class Player
 {
@@ -30,14 +25,11 @@ public class Player
         return (double)totalGuesses / NumberOfGames;
     }
 
-    // Används när result sorteras
     public override bool Equals(Object p)
     {
         return Name.Equals(((Player)p).Name);
     }
 
-
-    // Hittar inte när denna används
     public override int GetHashCode()
     {
         return Name.GetHashCode();

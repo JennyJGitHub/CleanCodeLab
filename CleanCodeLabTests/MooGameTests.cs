@@ -12,7 +12,7 @@
         }
 
         [TestMethod()]
-        public void GetRules_GettingRules_ReturnRules() // Är den nödvändig?
+        public void GetRules_GettingRules_ReturnRules()
         {
             string expected = "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
             "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
@@ -50,10 +50,10 @@
         }
 
         [TestMethod()]
-        public void GetNotProperGuessMessage_GettingMessage_ReturnMessage() // Är den nödvändig?
+        public void GetInvalidGuessMessage_GettingMessage_ReturnMessage()
         {
             string expected = "\nYour guess needs to be 4 numbers, please try again.\n";
-            string actual = mooGame.GetNotProperGuessMessage();
+            string actual = mooGame.GetInvalidGuessMessage();
             Assert.AreEqual(expected, actual);
         }
 
