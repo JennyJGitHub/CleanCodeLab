@@ -1,7 +1,6 @@
 ﻿namespace Games;
 
 // Todo:
-// Kolla om HandleGuess kan förbättras
 // Vill ändra result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
 
 
@@ -35,11 +34,11 @@ public class MooGame : IGuessingGame
         Goal = goal;
     }
 
-    public void HandleGuess(string guess) // Skriver du + eller - före 3 siffror så släpps det igenom.
+    public void HandleGuess(string guess)
     {
-        // Vill kolla om gissningen bara består av siffror, men vill inte använda guessInt. Finns det ett bättre sätt?
-        bool guessIsInt = Int32.TryParse(guess, out int guessInt);
-        if (guess.Length != 4 || guessIsInt == false)
+        bool guessIsOnlyNumbers = CheckIfGuessOnlyContainsNumbers(guess);
+
+        if (guess.Length != 4 || guessIsOnlyNumbers == false)
         {
             Guess = "";
         }
@@ -83,5 +82,16 @@ public class MooGame : IGuessingGame
             }
         }
         return (bulls, cows);
+    }
+
+    bool CheckIfGuessOnlyContainsNumbers(string guess)
+    {
+        foreach (char character in guess)
+        {
+            if (char.IsDigit(character) == false)
+                return false;
+        }
+
+        return true;
     }
 }

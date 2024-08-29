@@ -21,7 +21,7 @@
         }
 
         [TestMethod()]
-        public void MakeGoal_CallMethod_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska? Vet inte vad den ska heta.
+        public void MakeGoal_MakingNewGoal_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska? Vet inte vad den ska heta.
         {
             int expectedLength = 4;
             mooGame.MakeGoal();
@@ -43,6 +43,8 @@
         [DataRow("Shall not pass")]
         [DataRow("    ")]
         [DataRow("1.23")]
+        [DataRow("-123")]
+        [DataRow("+123")]
         public void HandleGuess_WrongInput_GuessIsEmptyString(string input)
         {
             mooGame.HandleGuess(input);
@@ -104,7 +106,5 @@
 
             Assert.AreEqual(expected, actual);
         }
-
-        // Ska jag göra fler tester på GetHint? BBB, och BB,C?
     }
 }
