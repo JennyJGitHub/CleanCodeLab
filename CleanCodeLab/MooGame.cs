@@ -1,14 +1,14 @@
 ﻿namespace Games;
 
-// Todo:
-// Vill ändra result.txt till resultMooGame så att det finns en annan result för det andra spelet (VG)
-
-
 public class MooGame : IGuessingGame
 {
     public string Goal { get; set; } = "";
     public string Guess { get; set; } = "";
-    public string TopListFileName { get; init; } = "result.txt";
+
+    public string GetName()
+    {
+        return "Moo";
+    }
 
     public string GetRules()
     {
@@ -20,17 +20,21 @@ public class MooGame : IGuessingGame
     {
         Random randomGenerator = new Random();
         string goal = "";
+
         for (int i = 0; i < 4; i++)
         {
             int randomNumber = randomGenerator.Next(10);
             string randomNumberAsString = randomNumber.ToString();
+
             while (goal.Contains(randomNumberAsString))
             {
                 randomNumber = randomGenerator.Next(10);
                 randomNumberAsString = randomNumber.ToString();
             }
+
             goal = goal + randomNumberAsString;
         }
+
         Goal = goal;
     }
 
@@ -57,6 +61,7 @@ public class MooGame : IGuessingGame
     public string GetHint()
     {
         (int bulls, int cows) = GetBullsAndCows();
+
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
     }
 
@@ -64,6 +69,7 @@ public class MooGame : IGuessingGame
     (int, int) GetBullsAndCows()
     {
         int bulls = 0, cows = 0;
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -81,6 +87,7 @@ public class MooGame : IGuessingGame
                 }
             }
         }
+
         return (bulls, cows);
     }
 
@@ -89,7 +96,9 @@ public class MooGame : IGuessingGame
         foreach (char character in guess)
         {
             if (char.IsDigit(character) == false)
+            {
                 return false;
+            }
         }
 
         return true;

@@ -17,6 +17,7 @@
             string expected = "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
             "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
             string actual = mooGame.GetRules();
+
             Assert.AreEqual(expected, actual);
         }
 
@@ -25,6 +26,7 @@
         {
             int expectedLength = 4;
             mooGame.MakeGoal();
+
             Assert.AreEqual(expectedLength, mooGame.Goal.Length);
         }
 
@@ -33,6 +35,7 @@
         {
             string input = "1234";
             mooGame.HandleGuess(input);
+
             Assert.AreEqual(input, mooGame.Guess);
         }
 
@@ -48,6 +51,7 @@
         public void HandleGuess_WrongInput_GuessIsEmptyString(string input)
         {
             mooGame.HandleGuess(input);
+
             Assert.AreEqual("", mooGame.Guess);
         }
 
@@ -56,6 +60,7 @@
         {
             string expected = "\nYour guess needs to be 4 numbers, please try again.\n";
             string actual = mooGame.GetInvalidGuessMessage();
+
             Assert.AreEqual(expected, actual);
         }
 

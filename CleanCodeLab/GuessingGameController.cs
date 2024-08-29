@@ -21,11 +21,11 @@ class GuessingGameController
 
     public void RunGame()
     {
-        bool playerWantsToQuit = false;
         string userName = GetUserName();
-        ITopListHandler topListHandler = new TopListHandlerForTxtFiles(game.TopListFileName);
+        ITopListHandler topListHandler = new TopListHandlerForTxtFiles(game.GetName());
 
-        while (playerWantsToQuit == false)
+        bool quitting = false;
+        while (quitting == false)
         {
             StartNewRound();
 
@@ -35,8 +35,8 @@ class GuessingGameController
             LoopUntilCorrectGuess();
             topListHandler.MakeTopList(userName, numberOfGuesses);
             ShowTopList(topListHandler.GetTopList());
-            ui.Write(GetCorrectGuessMessage() + "\nContinue?");
-            playerWantsToQuit = CheckIfPlayerWantsToQuit();        
+            ShowCorrectGuessMessage();
+            quitting = CheckIfQuitting();        
         }
         
     }
@@ -83,26 +83,28 @@ class GuessingGameController
     void ShowTopList(List<Player> topList)
     {
         ui.Write("Player   games average");
+
         foreach (Player player in topList)
         {
             ui.Write(string.Format("{0,-9}{1,5:D}{2,9:F2}", player.Name, player.NumberOfGames, player.Average()));
         }
     }
 
-    string GetCorrectGuessMessage()
+    void ShowCorrectGuessMessage()
     {
         if (numberOfGuesses == 1)
         {
-            return "\nAmazing, you got it right on your first try!";
+            ui.Write("\nAmazing, you got it right on your first try!");
         }
         else
         {
-            return "\nCorrect, it took " + numberOfGuesses + " guesses";
+            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses");
         }
     }
 
-    bool CheckIfPlayerWantsToQuit()
+    bool CheckIfQuitting()
     {
+        ui.Write("\nContinue?");
         string answer = ui.Read().ToLower();
 
         if (answer != null && answer != "" && answer.Substring(0, 1) == "n")
