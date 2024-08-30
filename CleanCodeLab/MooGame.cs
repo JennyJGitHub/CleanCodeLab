@@ -20,8 +20,9 @@ public class MooGame : IGuessingGame
     {
         Random randomGenerator = new Random();
         string goal = "";
+        int goalLength = 4;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < goalLength; i++)
         {
             int randomNumber = randomGenerator.Next(10);
             string randomNumberAsString = randomNumber.ToString();
@@ -40,9 +41,10 @@ public class MooGame : IGuessingGame
 
     public void HandleGuess(string guess)
     {
-        bool guessIsOnlyNumbers = CheckIfGuessOnlyContainsNumbers(guess);
+        bool guessIsOnlyNumbers = AreOnlyNumbers(guess);
+        int validGuessLength = 4;
 
-        if (guess.Length != 4 || guessIsOnlyNumbers == false)
+        if (guess.Length != validGuessLength || guessIsOnlyNumbers == false)
         {
             Guess = "";
         }
@@ -50,7 +52,19 @@ public class MooGame : IGuessingGame
         {
             Guess = guess;
         }
+    }
 
+    bool AreOnlyNumbers(string guess)
+    {
+        foreach (char character in guess)
+        {
+            if (char.IsDigit(character) == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public string GetInvalidGuessMessage()
@@ -70,9 +84,9 @@ public class MooGame : IGuessingGame
     {
         int bulls = 0, cows = 0;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < Guess.Length; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < Guess.Length; j++)
             {
                 if (Goal[i] == Guess[j])
                 {
@@ -89,18 +103,5 @@ public class MooGame : IGuessingGame
         }
 
         return (bulls, cows);
-    }
-
-    bool CheckIfGuessOnlyContainsNumbers(string guess)
-    {
-        foreach (char character in guess)
-        {
-            if (char.IsDigit(character) == false)
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

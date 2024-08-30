@@ -22,7 +22,7 @@
         }
 
         [TestMethod()]
-        public void MakeGoal_MakingNewGoal_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska? Vet inte vad den ska heta.
+        public void MakeGoal_MakingNewGoal_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska?
         {
             int expectedLength = 4;
             mooGame.MakeGoal();
@@ -34,6 +34,7 @@
         public void HandleGuess_CorrectInput_GuessIsInput()
         {
             string input = "1234";
+
             mooGame.HandleGuess(input);
 
             Assert.AreEqual(input, mooGame.Guess);

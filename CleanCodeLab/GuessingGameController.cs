@@ -22,7 +22,7 @@ class GuessingGameController
     public void RunGame()
     {
         string userName = GetUserName();
-        ITopListHandler topListHandler = new TopListHandlerForTxtFiles(game.GetName());
+        ITopListHandler topListHandler = new TxtFileTopListHandler(game.GetName());
 
         bool quitting = false;
         while (quitting == false)
@@ -36,9 +36,26 @@ class GuessingGameController
             topListHandler.MakeTopList(userName, numberOfGuesses);
             ShowTopList(topListHandler.GetTopList());
             ShowCorrectGuessMessage();
-            quitting = CheckIfQuitting();        
+            quitting = IsQuitting();        
         }
         
+    }
+
+    string GetUserName()
+    {
+        string name = "";
+
+        while (name == "")
+        {
+            ui.Write("Enter your user name:\n");
+            name = ui.Read().Trim();
+            if (name == "")
+            {
+                ui.Write("You have to enter a name to continue.\n");
+            }
+        }
+
+        return name;
     }
 
     void StartNewRound()
@@ -50,24 +67,6 @@ class GuessingGameController
         ui.Write("New game:\n");       
     }
 
-    string GetUserName()
-    {
-        ui.Write("Enter your user name:\n");
-        return ui.Read().Trim();
-    }
-
-    void GetGuess()
-    {
-        while (game.Guess == "")
-        {
-            game.HandleGuess(ui.Read().Trim());
-            if (game.Guess == "")
-            {
-                ui.Write(game.GetInvalidGuessMessage());
-            }
-        }
-    }
-
     void LoopUntilCorrectGuess()
     {
         while (game.Guess != game.Goal)
@@ -77,6 +76,19 @@ class GuessingGameController
             numberOfGuesses++;
             ui.Write(game.Guess + "\n");
             ui.Write(game.GetHint() + "\n");
+        }
+    }
+
+    void GetGuess()
+    {
+        while (game.Guess == "")
+        {
+            game.HandleGuess(ui.Read().Trim());
+
+            if (game.Guess == "")
+            {
+                ui.Write(game.GetInvalidGuessMessage());
+            }
         }
     }
 
@@ -98,11 +110,11 @@ class GuessingGameController
         }
         else
         {
-            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses");
+            ui.Write("\nCorrect, it took " + numberOfGuesses + " guesses.");
         }
     }
 
-    bool CheckIfQuitting()
+    bool IsQuitting()
     {
         ui.Write("\nContinue?");
         string answer = ui.Read().ToLower();
