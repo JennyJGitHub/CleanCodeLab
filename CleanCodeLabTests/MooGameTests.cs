@@ -22,7 +22,7 @@
         }
 
         [TestMethod()]
-        public void MakeGoal_MakingNewGoal_NewGoalMade() // Finns det något annat jag kan kolla för att se att metoden fungerar som den ska?
+        public void MakeGoal_MakingNewGoal_NewGoalMade()
         {
             int expectedLength = 4;
             mooGame.MakeGoal();

@@ -1,6 +1,6 @@
 ﻿namespace GamesUI;
 
-interface IUI
+public interface IUI
 {
     string Read();
     void Write(string ouput);

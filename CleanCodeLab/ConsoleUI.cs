@@ -1,6 +1,6 @@
 ﻿namespace GamesUI;
 
-class ConsoleUI : IUI
+public class ConsoleUI : IUI
 {
     public string Read()
     {

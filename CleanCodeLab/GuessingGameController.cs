@@ -1,10 +1,5 @@
 ﻿using GamesUI;
 
-/* 
-  TODOS:
-  - Vill fixa till ShowTopList så den ser finare ut (Extra om det finns tid)
- */
-
 namespace Games;
 
 class GuessingGameController
@@ -19,9 +14,8 @@ class GuessingGameController
         this.game = game;
     }
 
-    public void RunGame()
+    public void RunGame(string userName)
     {
-        string userName = GetUserName();
         ITopListHandler topListHandler = new TxtFileTopListHandler(game.GetName());
 
         bool quitting = false;
@@ -39,23 +33,6 @@ class GuessingGameController
             quitting = IsQuitting();        
         }
         
-    }
-
-    string GetUserName()
-    {
-        string name = "";
-
-        while (name == "")
-        {
-            ui.Write("Enter your user name:\n");
-            name = ui.Read().Trim();
-            if (name == "")
-            {
-                ui.Write("You have to enter a name to continue.\n");
-            }
-        }
-
-        return name;
     }
 
     void StartNewRound()

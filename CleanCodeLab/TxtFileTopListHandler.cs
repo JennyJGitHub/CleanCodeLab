@@ -1,11 +1,6 @@
-﻿/* 
-  TODOS:
-  - Bättre namn?
- */
+﻿namespace Games;
 
-namespace Games;
-
-public class TxtFileTopListHandler : ITopListHandler // Fundera mer på namnet
+public class TxtFileTopListHandler : ITopListHandler
 {
     string fileName = "";
 
@@ -13,7 +8,7 @@ public class TxtFileTopListHandler : ITopListHandler // Fundera mer på namnet
     {
         this.fileName = gameName + "Results.txt";
     }
-    public void MakeTopList(string userName, int numberOfGuesses) // Är MakeOrEditTopList ett bättre namn?
+    public void MakeTopList(string userName, int numberOfGuesses)
     {
         StreamWriter output = new StreamWriter(fileName, append: true);
         output.WriteLine(userName + "#&#" + numberOfGuesses);
