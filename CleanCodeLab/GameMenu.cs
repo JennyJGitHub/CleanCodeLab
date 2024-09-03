@@ -32,6 +32,7 @@ public class GameMenu
         ui.Write("");
         GetUserName();
     }
+
     void GetUserName()
     {
         string name = "";
@@ -40,6 +41,7 @@ public class GameMenu
         {
             ui.Write("Enter your user name:\n");
             name = ui.Read().Trim();
+
             if (name == "")
             {
                 ui.Write("You have to enter a name to continue.\n");
@@ -60,6 +62,7 @@ public class GameMenu
         try
         {
             GetUserName();
+
             while (quitting == false)
             {
                 userChoice = "";
@@ -72,7 +75,7 @@ public class GameMenu
         }
         catch (Exception exception)
         {
-            ui.Write(exception.Message);
+            ui.Write(exception.ToString());
         }
     }
 
