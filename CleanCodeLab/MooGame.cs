@@ -1,22 +1,19 @@
 ﻿namespace Games;
 
-public class MooGame : IGuessingGame
+public class MooGame : GuessingGame, IGuessingGame
 {
-    public string Goal { get; set; } = "";
-    public string Guess { get; set; } = "";
-
-    public string GetName()
+    public override string GetName()
     {
         return "Moo";
     }
 
-    public string GetRules()
+    public override string GetRules()
     {
-        return "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
+        return "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers (0-9). After each guess you get a hint.\n" +
             "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
     }
 
-    public void MakeGoal()
+    public override void MakeGoal()
     {
         Random randomGenerator = new Random();
         string goal = "";
@@ -39,69 +36,10 @@ public class MooGame : IGuessingGame
         Goal = goal;
     }
 
-    public void HandleGuess(string guess)
+    public override string GetHint()
     {
-        bool guessIsOnlyNumbers = AreOnlyNumbers(guess);
-        int validGuessLength = 4;
-
-        if (guess.Length != validGuessLength || guessIsOnlyNumbers == false)
-        {
-            Guess = "";
-        }
-        else
-        {
-            Guess = guess;
-        }
-    }
-
-    bool AreOnlyNumbers(string guess)
-    {
-        foreach (char character in guess)
-        {
-            if (char.IsDigit(character) == false)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public string GetInvalidGuessMessage()
-    {
-        return "\nYour guess needs to be 4 numbers, please try again.\n";
-    }
-
-    public string GetHint()
-    {
-        (int bulls, int cows) = GetBullsAndCows();
+        (int bulls, int cows) = CompareGuessWithGoal();
 
         return "BBBB".Substring(0, bulls) + "," + "CCCC".Substring(0, cows);
-    }
-
-
-    (int, int) GetBullsAndCows()
-    {
-        int bulls = 0, cows = 0;
-
-        for (int i = 0; i < Guess.Length; i++)
-        {
-            for (int j = 0; j < Guess.Length; j++)
-            {
-                if (Goal[i] == Guess[j])
-                {
-                    if (i == j)
-                    {
-                        bulls++;
-                    }
-                    else
-                    {
-                        cows++;
-                    }
-                }
-            }
-        }
-
-        return (bulls, cows);
     }
 }

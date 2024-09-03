@@ -19,7 +19,7 @@ public class GameMenu
             {"q", () => {Quit(); } },
             {"1", () => {ChangeUserName(); } },
             {"2", () => {StartGame(new MooGame()); } },
-            //{"3", () => {StartGame(new MastermindGame()); } }
+            {"3", () => {StartGame(new MastermindGame()); } }
         };
     }
 

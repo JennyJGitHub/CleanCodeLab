@@ -14,7 +14,7 @@
         [TestMethod()]
         public void GetRules_GettingRules_ReturnRules()
         {
-            string expected = "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers. After each guess you get a hint.\n" +
+            string expected = "Rules for Moo:\nTo win you need to guess the right combination of 4 unique numbers (0-9). After each guess you get a hint.\n" +
             "For every right number on the right spot you get a B and for every right number on the wrong spot you get a C.\n";
             string actual = mooGame.GetRules();
 
@@ -33,6 +33,7 @@
         [TestMethod()]
         public void HandleGuess_CorrectInput_GuessIsInput()
         {
+            mooGame.Goal = "1234";
             string input = "1234";
 
             mooGame.HandleGuess(input);
