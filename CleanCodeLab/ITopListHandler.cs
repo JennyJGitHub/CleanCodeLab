@@ -1,6 +1,6 @@
 ﻿namespace Games;
 
-public interface ITopListHandler // Bättre namn?
+public interface ITopListHandler
 {
     void MakeTopList(string userName, int numberOfGuesses);
     List<Player> GetTopList();
